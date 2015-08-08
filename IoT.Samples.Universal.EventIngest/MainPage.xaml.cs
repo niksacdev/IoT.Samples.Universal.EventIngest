@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media.Media3D;
 using IoT.Samples.EventIngest.Entity;
 using IoT.Samples.Universal.EventIngest.Helpers;
 
@@ -62,7 +64,7 @@ namespace IoT.Samples.Universal.EventIngest
             //TODO: build list from custom json
             var items = new List<FlipViewItem>
             {
-                new FlipViewItem { Name="1", Content ="MCS"},
+                new FlipViewItem { Name="1", Content ="MCS", IsTextScaleFactorEnabled = true, HorizontalContentAlignment = HorizontalAlignment.Center, VerticalContentAlignment = VerticalAlignment.Center},
                 new FlipViewItem { Name="2", Content ="EPG"},
                 new FlipViewItem { Name="3", Content ="Premier"},
                 new FlipViewItem { Name="3", Content ="Others"},
@@ -70,6 +72,8 @@ namespace IoT.Samples.Universal.EventIngest
 
             this.flipView.ItemsSource = items;
             flipView.UseTouchAnimationsForAllNavigation = true;
+            flipView.IsTextScaleFactorEnabled = true;
+            flipView.Transform3D = new PerspectiveTransform3D();
         }
     }
 }

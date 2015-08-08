@@ -8,7 +8,6 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <FlipView x:Name="flipView" HorizontalAlignment="Left" Margin="0,193,0,0" VerticalAlignment="Top" Width="340"  Tapped="flipView_Tapped" FontSize="48">
-        </FlipView>
+        <FlipView x:Name="flipView"  Tapped="flipView_Tapped" FontSize="64" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Page>
