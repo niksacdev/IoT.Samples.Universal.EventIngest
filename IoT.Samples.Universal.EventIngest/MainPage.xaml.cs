@@ -54,8 +54,11 @@ namespace IoT.Samples.Universal.EventIngest
 
             var result = await _connectionManager.SendEvent(eventData); // send message over event hub
             if (!result) return;
-            var dialog = new MessageDialog("Thanks for visiting the IoT booth!");
-            await dialog.ShowAsync();
+            var message = string.Format("Last Successful Message sent at: {0}", DateTime.UtcNow);
+
+            textBlock.Text = message;
+            //var dialog = new MessageDialog("Thanks for visiting the IoT booth!");
+            //await dialog.ShowAsync();
             InitializeFlipView();
         }
 

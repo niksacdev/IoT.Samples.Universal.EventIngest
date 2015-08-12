@@ -9,5 +9,6 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <FlipView x:Name="flipView"  Tapped="flipView_Tapped" FontSize="64" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Ready!!" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="13.333" FontWeight="Bold"/>
     </Grid>
 </Page>
