@@ -39,27 +39,35 @@ namespace IoT.Samples.Universal.EventIngest
 
         private async void flipView_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            // try to cast source as content presenter
-            var content = e.OriginalSource as ContentPresenter;
-
-            if (content == null) return;
-            
-            // Send data to Event Hub
-            var eventData = new Event
+            try
             {
-                Id = "iotboothdevice",
-                Timecreated = DateTime.UtcNow.ToString("mm:dd:yyyy hh:mm"),
-                Value = content.Content.ToString()
-            };
+                // try to cast source as content presenter
+                var content = e.OriginalSource as ContentPresenter;
 
-            var result = await _connectionManager.SendEvent(eventData); // send message over event hub
-            if (!result) return;
-            var message = string.Format("Last Successful Message sent at: {0}", DateTime.UtcNow);
+                if (content == null) return;
 
-            textBlock.Text = message;
-            //var dialog = new MessageDialog("Thanks for visiting the IoT booth!");
-            //await dialog.ShowAsync();
-            InitializeFlipView();
+                // Send data to Event Hub
+                var eventData = new Event
+                {
+                    Id = "iotboothdevice",
+                    Timecreated = DateTime.UtcNow.ToString("mm:dd:yyyy hh:mm"),
+                    Value = content.Content.ToString()
+                };
+
+                var result = await _connectionManager.SendEvent(eventData); // send message over event hub
+                if (!result) return;
+                var message = string.Format("Last Successful Message sent at: {0}", DateTime.UtcNow);
+
+                textBlock.Text = message;
+                //var dialog = new MessageDialog("Thanks for visiting the IoT booth!");
+                //await dialog.ShowAsync();
+                InitializeFlipView();
+            }
+            catch (Exception ex)
+            {
+                textBlock.Text = ex.Message;
+            }
+            
         }
 
         private void InitializeFlipView()
