@@ -31,6 +31,8 @@ namespace IoT.Samples.Universal.Common
         private Session _session;
         private SenderLink _sender;
 
+        public Protocol Protocol { get; set; }
+
         public ConnectionManager(Settings settings)
         {
             // load settings from json
@@ -94,11 +96,12 @@ namespace IoT.Samples.Universal.Common
         public async Task<bool> SendEvent(Event eventStream)
         {
             eventStream.Timecreated = DateTime.UtcNow.ToString("mm:dd:yyyy hh:mm:ss");
-            return await SendMessage(Protocol.Amqp, eventStream.ToJson());
+            return await SendMessage(eventStream.ToJson());
         }
 
-        private async Task<bool> SendMessage(Protocol protocol, string message)
+        private async Task<bool> SendMessage(string message)
         {
+            var protocol = Protocol;
             switch (protocol)
             {
                     case Protocol.Amqp:

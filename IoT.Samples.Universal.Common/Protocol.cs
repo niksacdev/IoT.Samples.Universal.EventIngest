@@ -8,8 +8,9 @@ namespace IoT.Samples.Universal.Common
 {
     public enum Protocol
     {
-        Https,
         Amqp,
+        Https,
+        Amqps, // Coming soon!
         Mqtt // not supported
     }
 }
