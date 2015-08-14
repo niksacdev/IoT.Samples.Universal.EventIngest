@@ -8,11 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
-using Windows.UI.Xaml;
 using Windows.Web.Http;
 using Amqp;
 using Amqp.Framing;
-using Amqp.Sasl;
 
 namespace IoT.Samples.Universal.Common
 {
@@ -63,7 +61,7 @@ namespace IoT.Samples.Universal.Common
         /// Validate the settings 
         /// </summary>
         /// <returns></returns>
-        bool ValidateSettings()
+        private bool ValidateSettings()
         {
             if ((Settings.ServicebusNamespace == "") ||
                 (Settings.EventHubName == "") ||
@@ -82,11 +80,11 @@ namespace IoT.Samples.Universal.Common
         /// <summary>
         /// Apply new settings to sensors collection
         /// </summary>
-        public bool SaveSettings()
+        private bool SaveSettings()
         {
             if (ValidateSettings())
             {
-                this.InitEventHubConnection(Protocol.Amqp);
+                this.InitializeEventHubConnection(Protocol.Amqp);
                 return true;
             } else {
                 return false;
@@ -163,7 +161,7 @@ namespace IoT.Samples.Universal.Common
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public string HmacSha256(string key, string value)
+        private string HmacSha256(string key, string value)
         {
             var keyStrm = CryptographicBuffer.ConvertStringToBinary(key, BinaryStringEncoding.Utf8);
             var valueStrm = CryptographicBuffer.ConvertStringToBinary(value, BinaryStringEncoding.Utf8);
@@ -178,7 +176,7 @@ namespace IoT.Samples.Universal.Common
         /// <summary>
         /// Initialize Event Hub connection
         /// </summary>
-        public bool InitEventHubConnection(Protocol protocol)
+        public bool InitializeEventHubConnection(Protocol protocol)
         {
             try
             {

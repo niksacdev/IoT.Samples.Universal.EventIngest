@@ -79,13 +79,6 @@ namespace IoT.Samples.Universal.EventIngest
                 // Populate the FlipView control
                 InitializeFlipView();
 
-                // Configure EVent Hub and other settings
-                // var connectionString = @"Endpoint=iotboothncm.servicebus.windows.netsb:///;SharedAccessKeyName=manage;SharedAccessKey=UtR+9AnafOGvqC/bxvMH2ndpHIAOYb9rvPWPBzpQdbI=";
-                //const string sbNamespace = "iotboothncm";
-                //const string ehName = "iotboothncmeh";
-                //const string ehkeyName = "sender";
-                //const string ehkey = "6lnCam/z9REMjLI1OBFnmqkFL+T5YH0/MV0IgsvCzQA=";
-
                 // Get the settings
                 var resourceUri = new Uri("ms-appx:///assets/settings/settings.json");
                 var file = await StorageFile.GetFileFromApplicationUriAsync(resourceUri);
