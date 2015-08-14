@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Windows.UI.Popups;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Media3D;
-using IoT.Samples.EventIngest.Entity;
-using IoT.Samples.Universal.EventIngest.Helpers;
+using IoT.Samples.Universal.Common;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -17,24 +16,10 @@ namespace IoT.Samples.Universal.EventIngest
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        readonly ConnectionManager _connectionManager;
+        private ConnectionManager _connectionManager;
         public MainPage()
         {
-            //TODO: remove hardcoding of configuration data
             this.InitializeComponent();
-
-            // Populate the FlipView control
-            InitializeFlipView();
-
-            // Configure EVent Hub and other settings
-            // var connectionString = @"Endpoint=iotboothncm.servicebus.windows.netsb:///;SharedAccessKeyName=manage;SharedAccessKey=UtR+9AnafOGvqC/bxvMH2ndpHIAOYb9rvPWPBzpQdbI=";
-            const string sbNamespace = "iotboothncm";
-            const string ehName = "iotboothncmeh";
-            const string ehkeyName = "sender";
-            const string ehkey = "6lnCam/z9REMjLI1OBFnmqkFL+T5YH0/MV0IgsvCzQA=";
-
-            // Create connection
-            this._connectionManager = new ConnectionManager(sbNamespace, ehName, ehkeyName, ehkey);
         }
 
         private async void flipView_Tapped(object sender, TappedRoutedEventArgs e)
@@ -85,6 +70,47 @@ namespace IoT.Samples.Universal.EventIngest
             flipView.UseTouchAnimationsForAllNavigation = true;
             flipView.IsTextScaleFactorEnabled = true;
             flipView.Transform3D = new PerspectiveTransform3D();
+        }
+
+        private async void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Populate the FlipView control
+                InitializeFlipView();
+
+                // Configure EVent Hub and other settings
+                // var connectionString = @"Endpoint=iotboothncm.servicebus.windows.netsb:///;SharedAccessKeyName=manage;SharedAccessKey=UtR+9AnafOGvqC/bxvMH2ndpHIAOYb9rvPWPBzpQdbI=";
+                //const string sbNamespace = "iotboothncm";
+                //const string ehName = "iotboothncmeh";
+                //const string ehkeyName = "sender";
+                //const string ehkey = "6lnCam/z9REMjLI1OBFnmqkFL+T5YH0/MV0IgsvCzQA=";
+
+                // Get the settings
+                var resourceUri = new Uri("ms-appx:///assets/settings/settings.json");
+                var file = await StorageFile.GetFileFromApplicationUriAsync(resourceUri);
+                var contents = string.Empty;
+                if (file != null)
+                {
+                    contents = await FileIO.ReadTextAsync(file);
+                }
+
+                if (string.IsNullOrWhiteSpace(contents))
+                {
+                    textBlock.Text = "Could not retrieve settings";
+                    return;
+                }
+
+                // Deserialize the json into entity
+                var settings = Settings.GetSettings(contents);
+
+                // Create connection
+                _connectionManager = new ConnectionManager(settings);
+            }
+            catch (Exception ex)
+            {
+                textBlock.Text = ex.Message;
+            }
         }
     }
 }

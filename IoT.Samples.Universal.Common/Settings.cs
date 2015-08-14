@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Newtonsoft.Json;
 
-namespace IoT.Samples.Universal.EventIngest.Helpers
+namespace IoT.Samples.Universal.Common
 {
     /// <summary>
     ///  Class for managing app settings
     /// </summary>
-    public class AppSettings
+    public class Settings
     {
         // Our settings
         readonly ApplicationDataContainer _localSettings;
@@ -34,7 +35,7 @@ namespace IoT.Samples.Universal.EventIngest.Helpers
         /// <summary>
         /// Constructor that gets the application settings.
         /// </summary>
-        public AppSettings()
+        public Settings()
         {
             // Get the settings for this application.
             _localSettings = ApplicationData.Current.LocalSettings;
@@ -101,9 +102,6 @@ namespace IoT.Samples.Universal.EventIngest.Helpers
         /// </summary>
         public void Save()
         {
-            // keeping the below in case we want to use this code on a Windows Phone 8 device.
-            // With universal Windows Apps, this is no longer necessary as settings are saved automatically
-            //            settings.Save();
         }
 
 
@@ -212,6 +210,11 @@ namespace IoT.Samples.Universal.EventIngest.Helpers
                     Save();
                 }
             }
+        }
+
+        public static Settings GetSettings(string json)
+        {
+            return JsonConvert.DeserializeObject<Settings>(json);
         }
     }
 }

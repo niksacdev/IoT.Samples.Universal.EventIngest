@@ -1,0 +1,8 @@
+﻿{
+  "settings": {
+    "servicebusnamespace": "iotboothncm",
+    "eventhubname": "iotboothncmeh",
+    "keyname": "sender",
+    "keyvalue": "6lnCam/z9REMjLI1OBFnmqkFL+T5YH0/MV0IgsvCzQA="
+  }
+}
