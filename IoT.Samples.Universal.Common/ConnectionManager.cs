@@ -141,6 +141,19 @@ namespace IoT.Samples.Universal.Common
             }
         }
 
+        private async Task<bool> SendMessageAmqp(string message)
+        {
+            //TODO: figure out if AMQP.NET lite support async method calls
+            // construct message
+            var messageValue = Encoding.UTF8.GetBytes(message);
+
+            // here, AMQP supports 3 types of body, here we use Data.
+            var formattedMessage = new Message { BodySection = new Data { Binary = messageValue } };
+            _sender.Send(formattedMessage, null, null); // Send the message 
+            // _connection.Close(); // close connection
+            return true;
+        }
+
         /// <summary>
         /// Helper function to get SAS token for connecting to Azure Event Hub
         /// </summary>
@@ -220,17 +233,5 @@ namespace IoT.Samples.Universal.Common
             }
         }
 
-        private async Task<bool> SendMessageAmqp(string message)
-        {
-            //TODO: figure out if AMQP.NET lite support async method calls
-            // construct message
-            var messageValue = Encoding.UTF8.GetBytes(message);
-
-            // here, AMQP supports 3 types of body, here we use Data.
-            var formattedMessage = new Message { BodySection = new Data { Binary = messageValue } };
-            _sender.Send(formattedMessage, null, null); // Send the message 
-            // _connection.Close(); // close connection
-            return true;
-        }
     }
 }

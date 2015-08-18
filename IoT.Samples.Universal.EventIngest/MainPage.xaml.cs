@@ -52,7 +52,6 @@ namespace IoT.Samples.Universal.EventIngest
             {
                 textBlock.Text = ex.Message;
             }
-            
         }
 
         private void InitializeFlipView()
